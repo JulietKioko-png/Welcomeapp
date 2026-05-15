@@ -17,6 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var text by remember { mutableStateOf("Hello Juliet!") }
+            var count by remember { mutableStateOf(0) }
+
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
@@ -24,7 +26,15 @@ class MainActivity : ComponentActivity() {
             ) {
                 Text(text = text, fontSize = 28.sp)
                 Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = { text = "Button Clicked!" }) {
+                Text(
+                    text = "Button clicked: $count times",
+                    fontSize = 18.sp
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Button(onClick = {
+                    count++
+                    text = "You clicked $count times!"
+                }) {
                     Text("Click Me")
                 }
             }
