@@ -12,6 +12,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material3.ButtonDefaults
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,15 +41,35 @@ class MainActivity : ComponentActivity() {
                     label = { Text("Enter your name") }
                 )
                 Spacer(modifier = Modifier.height(20.dp))
-                Button(onClick = {
-                    count++
-                    greeting = if (name.isNotEmpty()) {
-                        "Hello $name!"
-                    } else {
-                        "Hello Juliet!"
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Greet button
+                    Button(onClick = {
+                        count++
+                        greeting = if (name.isNotEmpty()) {
+                            "Hello $name!"
+                        } else {
+                            "Hello Juliet!"
+                        }
+                    }) {
+                        Text("Greet Me!")
                     }
-                }) {
-                    Text("Greet Me!")
+
+                    // Reset button
+                    Button(
+                        onClick = {
+                            greeting = "Hello Juliet!"
+                            name = ""
+                            count = 0
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Red
+                        )
+                    ) {
+                        Text("Reset")
+                    }
                 }
             }
         }
