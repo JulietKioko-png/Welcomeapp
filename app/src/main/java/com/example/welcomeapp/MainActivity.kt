@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Alignment
@@ -16,7 +17,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var text by remember { mutableStateOf("Hello Juliet!") }
+            var name by remember { mutableStateOf("") }
+            var greeting by remember { mutableStateOf("Hello Juliet!") }
             var count by remember { mutableStateOf(0) }
 
             Column(
@@ -24,18 +26,28 @@ class MainActivity : ComponentActivity() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = text, fontSize = 28.sp)
+                Text(text = greeting, fontSize = 28.sp)
                 Spacer(modifier = Modifier.height(20.dp))
                 Text(
                     text = "Button clicked: $count times",
                     fontSize = 18.sp
                 )
                 Spacer(modifier = Modifier.height(20.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Enter your name") }
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Button(onClick = {
                     count++
-                    text = "You clicked $count times!"
+                    greeting = if (name.isNotEmpty()) {
+                        "Hello $name!"
+                    } else {
+                        "Hello Juliet!"
+                    }
                 }) {
-                    Text("Click Me")
+                    Text("Greet Me!")
                 }
             }
         }
